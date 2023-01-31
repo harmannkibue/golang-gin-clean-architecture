@@ -1,0 +1,145 @@
+basePath: /api/v1
+definitions:
+  db.Blog:
+    properties:
+      createdAt:
+        type: string
+      descriptions:
+        type: string
+      id:
+        type: string
+      updatedAt:
+        type: string
+      userRole:
+        type: string
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  v1.createBlogRequestBody:
+    properties:
+      description:
+        type: string
+    type: object
+  v1.createBlogResponse:
+    properties:
+      created_at:
+        type: string
+      message:
+        type: string
+    type: object
+  v1.listBlogsResponse:
+    properties:
+      blogs:
+        items:
+          $ref: '#/definitions/v1.createBlogResponse'
+        type: array
+    type: object
+  v1.singleBlogResponse:
+    type: object
+host: localhost:8089
+info:
+  contact: {}
+  description: |-
+    Ledgers api endpoints for the Accounts Ledgers.
+    It serves as Accounts Ledgers.
+  license: {}
+  title: Ledgers Clean Architecture.
+  version: "1.0"
+paths:
+  /blogs/:
+    get:
+      consumes:
+      - application/json
+      description: Show all blogs registered
+      operationId: Fetch Blog
+      parameters:
+      - description: "1"
+        in: query
+        name: Page
+        type: string
+      - description: "10"
+        in: query
+        name: ItemsPerPage
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.listBlogsResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: List all the Blogs
+      tags:
+      - Blogs
+  /blogs/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Show a single blog registered
+      operationId: Single blog
+      parameters:
+      - description: blog ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/v1.singleBlogResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Fetch single blog by ID
+      tags:
+      - Blogs
+  /blogs/create-blog/:
+    post:
+      consumes:
+      - application/json
+      description: Create a blog
+      operationId: Create a blog
+      parameters:
+      - description: Create blog request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/v1.createBlogRequestBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/v1.createBlogResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/httputil.HTTPError'
+      summary: Create a blog
+      tags:
+      - Blogs
+securityDefinitions:
+  BasicAuth:
+    type: basic
+swagger: "2.0"

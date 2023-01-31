@@ -1,0 +1,24 @@
+## For production use
+app:
+  name: 'GIN GONIC GOLANG CLEAN ARCHITECTURE'
+  version: '1.0.0'
+
+http:
+  port: '8088'
+
+logger:
+  log_level: 'debug'
+  rollbar_env: 'go-clean-template'
+
+postgres:
+  database_driver: "postgres"
+  pool_max: 2
+  pg_ssl: 'disable'
+  pg_timezone: 'Africa/Nairobi'
+
+  pg_user: 'harmannkibue'
+  pg_pass: 'mqmlove02'
+  pg_db: 'LEDGERS_LOCAL_TEST'
+  pg_host: 'localhost'
+  pg_port: '5433'
+
