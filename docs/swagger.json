@@ -1,8 +1,8 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Ledgers api endpoints for the Accounts Ledgers.\nIt serves as Accounts Ledgers.",
-        "title": "Ledgers Clean Architecture.",
+        "description": "Illustration of uncle Bob's clean architecture using a demo blogs api.\nIt serves as Blog.",
+        "title": "Gin Gonic golang Clean Architecture.",
         "contact": {},
         "license": {},
         "version": "1.0"

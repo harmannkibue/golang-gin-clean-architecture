@@ -246,8 +246,8 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "localhost:8089",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
-	Title:       "Ledgers Clean Architecture.",
-	Description: "Ledgers api endpoints for the Accounts Ledgers.\nIt serves as Accounts Ledgers.",
+	Title:       "Gin Gonic golang Clean Architecture.",
+	Description: "Illustration of uncle Bob's clean architecture using a demo blogs api.\nIt serves as Blog.",
 }
 
 type s struct{}

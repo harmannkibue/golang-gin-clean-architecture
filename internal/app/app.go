@@ -36,7 +36,7 @@ func Run(cfg *config.Config) {
 	// Initializing a store for repository -.
 	store := db.NewStore(conn)
 
-	ledgerUsecase := usecase.NewLedgerUseCase(store, cfg)
+	ledgerUsecase := usecase.NewBlogUseCase(store, cfg)
 
 	// Passing also the basic auth middleware to all  Routers
 	v1.NewRouter(router, l, *ledgerUsecase)

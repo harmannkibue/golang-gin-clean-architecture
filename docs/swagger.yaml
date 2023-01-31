@@ -47,10 +47,10 @@ host: localhost:8089
 info:
   contact: {}
   description: |-
-    Ledgers api endpoints for the Accounts Ledgers.
-    It serves as Accounts Ledgers.
+    Illustration of uncle Bob's clean architecture using a demo blogs api.
+    It serves as Blog.
   license: {}
-  title: Ledgers Clean Architecture.
+  title: Gin Gonic golang Clean Architecture.
   version: "1.0"
 paths:
   /blogs/:

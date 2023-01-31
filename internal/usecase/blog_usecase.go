@@ -11,7 +11,7 @@ import (
 )
 
 // GetBlog getting a single blog by id -.
-func (usecase *LedgerUseCase) GetBlog(ctx context.Context, id string) (*db.Blog, error) {
+func (usecase *BlogUseCase) GetBlog(ctx context.Context, id string) (*db.Blog, error) {
 	uuID, err := uuid.Parse(id)
 
 	if err != nil {
@@ -26,7 +26,7 @@ func (usecase *LedgerUseCase) GetBlog(ctx context.Context, id string) (*db.Blog,
 	return &blog, nil
 }
 
-func (usecase *LedgerUseCase) CreateBlog(ctx context.Context, description string) (*db.Blog, error) {
+func (usecase *BlogUseCase) CreateBlog(ctx context.Context, description string) (*db.Blog, error) {
 
 	blog, err := usecase.store.CreateBlog(ctx, sql.NullString{String: description, Valid: true})
 
@@ -49,7 +49,7 @@ type listBlogsResponse struct {
 }
 
 // ListBlogs -.
-func (usecase *LedgerUseCase) ListBlogs(ctx context.Context, args ListBlogsParams) (*listBlogsResponse, error) {
+func (usecase *BlogUseCase) ListBlogs(ctx context.Context, args ListBlogsParams) (*listBlogsResponse, error) {
 
 	page, err := utils.StringToInt32(args.Page)
 
