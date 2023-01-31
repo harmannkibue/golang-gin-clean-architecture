@@ -1,13 +1,13 @@
 version: '3.9'
 services:
-  va-admin-app:
+  blog-app:
     build: .
-    container_name: 'va-admin-app'
+    container_name: 'blog-app'
     image: va-admin
     environment:
-      PG_URL: 'postgresql://churpy:churpyPass@postgres:5432/VA-ADMIN?sslmode=disable'
+      PG_URL: 'postgresql://user:blogs@postgres:5432/BLOG_DB?sslmode=disable'
     ports:
-      - "8082:8082"
+      - "8089:8089"
     networks:
       - user-network
     command: [ "/app/main" ]
