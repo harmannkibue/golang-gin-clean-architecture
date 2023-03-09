@@ -1,7 +1,8 @@
-package v1
+package blog_route
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase"
 	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
@@ -46,7 +47,7 @@ func (route *ledgerRoute) blog(ctx *gin.Context) {
 	blog, err := route.u.GetBlog(ctx, id)
 	if err != nil {
 		route.l.Error(err, "http - v1 - getting single bank")
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		ctx.JSON(entity.GetStatusCode(err), entity.ErrorCodeResponse(err))
 		return
 	}
 
@@ -82,14 +83,14 @@ func (route *ledgerRoute) createBlog(ctx *gin.Context) {
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		route.l.Error(err, "http - v1 - create a blog route")
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		ctx.JSON(entity.GetStatusCode(err), entity.ErrorCodeResponse(err))
 		return
 	}
 
 	blog, err := route.u.CreateBlog(ctx, body.Description)
 
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		ctx.JSON(entity.GetStatusCode(err), entity.ErrorCodeResponse(err))
 	}
 
 	ctx.JSON(http.StatusCreated, blog)
@@ -124,7 +125,7 @@ func (route *ledgerRoute) blogs(ctx *gin.Context) {
 	})
 
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResponse(err))
+		ctx.JSON(entity.GetStatusCode(err), entity.ErrorCodeResponse(err))
 	}
 	ctx.JSON(http.StatusOK, blogs)
 }

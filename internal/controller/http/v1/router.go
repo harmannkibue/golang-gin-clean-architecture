@@ -4,6 +4,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/harmannkibue/golang_gin_clean_architecture/docs"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1/blog_route"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	"net/http"
@@ -50,6 +51,6 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.BlogUseCase) {
 	// Routers -.
 	unversionedGroup := handler.Group("/api/v1")
 	{
-		newVirtualAccountsRoute(unversionedGroup, u, l)
+		blog_route.newVirtualAccountsRoute(unversionedGroup, u, l)
 	}
 }

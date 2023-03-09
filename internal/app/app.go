@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/config"
-	v1 "github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase"
 	_ "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase"
 	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories"
