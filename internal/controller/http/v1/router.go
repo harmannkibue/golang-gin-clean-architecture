@@ -5,7 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	_ "github.com/harmannkibue/golang_gin_clean_architecture/docs"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1/blog_route"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	"net/http"
 	// Swagger docs.
@@ -24,8 +24,8 @@ import (
 // @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
-func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.BlogUseCase) {
-	// Options
+func NewRouter(handler *gin.Engine, l logger.Interface, u blog_usecase.BlogUseCase) {
+	// Options -.
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
 
@@ -50,7 +50,8 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.BlogUseCase) {
 
 	// Routers -.
 	unversionedGroup := handler.Group("/api/v1")
+
 	{
-		blog_route.newVirtualAccountsRoute(unversionedGroup, u, l)
+		blog_route.NewBlogRoute(unversionedGroup, u, l)
 	}
 }

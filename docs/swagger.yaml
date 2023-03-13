@@ -1,6 +1,40 @@
 basePath: /api/v1
 definitions:
-  db.Blog:
+  blog_route.createBlogRequestBody:
+    properties:
+      description:
+        type: string
+    type: object
+  blog_route.createBlogResponse:
+    properties:
+      created_at:
+        type: string
+      message:
+        type: string
+    type: object
+  blog_route.listBlogsResponse:
+    properties:
+      blogs:
+        items:
+          $ref: '#/definitions/blog_route.createBlogResponse'
+        type: array
+    type: object
+  blog_route.singleBlogResponse:
+    properties:
+      blog:
+        $ref: '#/definitions/sqlc.Blog'
+        type: object
+    type: object
+  httputil.HTTPError:
+    properties:
+      code:
+        example: 400
+        type: integer
+      message:
+        example: status bad request
+        type: string
+    type: object
+  sqlc.Blog:
     properties:
       createdAt:
         type: string
@@ -12,36 +46,6 @@ definitions:
         type: string
       userRole:
         type: string
-    type: object
-  httputil.HTTPError:
-    properties:
-      code:
-        example: 400
-        type: integer
-      message:
-        example: status bad request
-        type: string
-    type: object
-  v1.createBlogRequestBody:
-    properties:
-      description:
-        type: string
-    type: object
-  v1.createBlogResponse:
-    properties:
-      created_at:
-        type: string
-      message:
-        type: string
-    type: object
-  v1.listBlogsResponse:
-    properties:
-      blogs:
-        items:
-          $ref: '#/definitions/v1.createBlogResponse'
-        type: array
-    type: object
-  v1.singleBlogResponse:
     type: object
 host: localhost:8089
 info:
@@ -74,7 +78,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/v1.listBlogsResponse'
+            $ref: '#/definitions/blog_route.listBlogsResponse'
         "400":
           description: Bad Request
           schema:
@@ -100,7 +104,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/v1.singleBlogResponse'
+            $ref: '#/definitions/blog_route.singleBlogResponse'
         "400":
           description: Bad Request
           schema:
@@ -120,14 +124,14 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/v1.createBlogRequestBody'
+          $ref: '#/definitions/blog_route.createBlogRequestBody'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/v1.createBlogResponse'
+            $ref: '#/definitions/blog_route.createBlogResponse'
         "400":
           description: Bad Request
           schema:
