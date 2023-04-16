@@ -70,3 +70,7 @@ sqlcGenerate: ### Command used to generate database query repository store.Packa
 dbDocs: ### Command used for documenting generating database schema documentations.
 	dbdocs build docs/db.dbml
 .PHONY: dbDocs
+
+mockeryGenerate: ### generates testing mocks using mockery tool
+	mockery --dir=internal/entity --name=Store --filename=store.go --output=internal/entity/mocks --outpkg=mocks
+.PHONY: mockeryGenerate

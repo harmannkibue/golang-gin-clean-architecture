@@ -23,8 +23,7 @@ func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 
 	// HTTP Server -.
-	gin.SetMode(gin.DebugMode)
-	router := gin.Default()
+	handler := gin.Default()
 
 	conn, err := postgres.New(cfg)
 
@@ -44,12 +43,10 @@ func Run(cfg *config.Config) {
 
 	blogUsecase := blog_usecase.NewBlogUseCase(store, cfg)
 
-	// Passing also the basic auth middleware to all  Routers
-	v1.NewRouter(router, l, *blogUsecase)
+	// Passing also the basic auth middleware to all  Routers -.
+	v1.NewRouter(handler, l, *blogUsecase)
 
-	//log.Fatal(router.Run(":" + cfg.Port))
-
-	httpServer := httpserver.New(router, httpserver.Port(cfg.HTTP.Port))
+	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
 	// Waiting signal -.
 	interrupt := make(chan os.Signal, 1)
@@ -64,6 +61,7 @@ func Run(cfg *config.Config) {
 
 	// Shutdown
 	err = httpServer.Shutdown()
+
 	if err != nil {
 		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
 	}

@@ -35,7 +35,7 @@ func (store *SqlStore) execTx(ctx context.Context, fn func(*sqlc.Queries) error)
 		return err
 	}
 
-	// calling the new with a sql transaction not sql.queries object
+	// calling the new with a sql transaction not sql.queries object -.
 	q := sqlc.New(tx)
 
 	err = fn(q)
