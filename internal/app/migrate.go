@@ -4,8 +4,9 @@ package app
 
 import (
 	"errors"
-	"fmt"
+	"github.com/golang-migrate/migrate/v4"
 	"github.com/harmannkibue/golang_gin_clean_architecture/config"
+
 	"log"
 	"time"
 
@@ -28,7 +29,6 @@ func init() {
 
 	databaseURL := BuildPostgresUrl(cfg)
 
-	fmt.Println("THE PG URL ISS ", databaseURL)
 	if len(databaseURL) == 0 {
 		log.Fatalf("migrate: environment variable not declared: PG_URL")
 	}
