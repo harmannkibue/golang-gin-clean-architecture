@@ -15,7 +15,7 @@ type ledgerRoute struct {
 	l logger.Interface
 }
 
-func newVirtualAccountsRoute(handler *gin.RouterGroup, t usecase.BlogUseCase, l logger.Interface) {
+func NewBlogRoute(handler *gin.RouterGroup, t usecase.BlogUseCase, l logger.Interface) {
 	r := &ledgerRoute{t, l}
 
 	h := handler.Group("/blogs")

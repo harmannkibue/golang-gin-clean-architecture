@@ -51,6 +51,6 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u usecase.BlogUseCase) {
 	// Routers -.
 	unversionedGroup := handler.Group("/api/v1")
 	{
-		blog_route.newVirtualAccountsRoute(unversionedGroup, u, l)
+		blog_route.NewBlogRoute(unversionedGroup, u, l)
 	}
 }
