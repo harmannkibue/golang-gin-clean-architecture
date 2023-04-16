@@ -57,7 +57,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/v1.listBlogsResponse"
+                            "$ref": "#/definitions/blog_route.listBlogsResponse"
                         }
                     },
                     "400": {
@@ -90,7 +90,7 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/v1.createBlogRequestBody"
+                            "$ref": "#/definitions/blog_route.createBlogRequestBody"
                         }
                     }
                 ],
@@ -98,7 +98,7 @@ var doc = `{
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/v1.createBlogResponse"
+                            "$ref": "#/definitions/blog_route.createBlogResponse"
                         }
                     },
                     "400": {
@@ -143,7 +143,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/v1.singleBlogResponse"
+                            "$ref": "#/definitions/blog_route.singleBlogResponse"
                         }
                     },
                     "400": {
@@ -157,7 +157,59 @@ var doc = `{
         }
     },
     "definitions": {
-        "db.Blog": {
+        "blog_route.createBlogRequestBody": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                }
+            }
+        },
+        "blog_route.createBlogResponse": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "blog_route.listBlogsResponse": {
+            "type": "object",
+            "properties": {
+                "blogs": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/blog_route.createBlogResponse"
+                    }
+                }
+            }
+        },
+        "blog_route.singleBlogResponse": {
+            "type": "object",
+            "properties": {
+                "blog": {
+                    "type": "object",
+                    "$ref": "#/definitions/sqlc.Blog"
+                }
+            }
+        },
+        "httputil.HTTPError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "example": 400
+                },
+                "message": {
+                    "type": "string",
+                    "example": "status bad request"
+                }
+            }
+        },
+        "sqlc.Blog": {
             "type": "object",
             "properties": {
                 "createdAt": {
@@ -176,52 +228,6 @@ var doc = `{
                     "type": "string"
                 }
             }
-        },
-        "httputil.HTTPError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "example": 400
-                },
-                "message": {
-                    "type": "string",
-                    "example": "status bad request"
-                }
-            }
-        },
-        "v1.createBlogRequestBody": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                }
-            }
-        },
-        "v1.createBlogResponse": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "v1.listBlogsResponse": {
-            "type": "object",
-            "properties": {
-                "blogs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/v1.createBlogResponse"
-                    }
-                }
-            }
-        },
-        "v1.singleBlogResponse": {
-            "type": "object"
         }
     },
     "securityDefinitions": {
@@ -243,7 +249,7 @@ type swaggerInfo struct {
 // SwaggerInfo holds exported Swagger Info so clients can modify it
 var SwaggerInfo = swaggerInfo{
 	Version:     "1.0",
-	Host:        "localhost:8089",
+	Host:        "localhost:8080",
 	BasePath:    "/api/v1",
 	Schemes:     []string{},
 	Title:       "Gin Gonic golang Clean Architecture.",

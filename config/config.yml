@@ -4,7 +4,7 @@ app:
   version: '1.0.0'
 
 http:
-  port: '8088'
+  port: '8080'
 
 logger:
   log_level: 'debug'
@@ -16,9 +16,9 @@ postgres:
   pg_ssl: 'disable'
   pg_timezone: 'Africa/Nairobi'
 
-  pg_user: 'harmannkibue'
-  pg_pass: 'mqmlove02'
-  pg_db: 'LEDGERS_LOCAL_TEST'
+  pg_user: 'postgres'
+  pg_pass: 'postgres'
+  pg_db: 'BLOG_DATABASE'
   pg_host: 'localhost'
   pg_port: '5433'
 
