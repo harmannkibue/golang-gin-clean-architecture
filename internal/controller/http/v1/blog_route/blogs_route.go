@@ -4,7 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
 	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	_ "github.com/swaggo/swag/example/celler/httputil"
@@ -16,7 +15,8 @@ type BlogRoute struct {
 	l logger.Interface
 }
 
-func NewBlogRoute(handler *gin.RouterGroup, t *blog_usecase.BlogUseCase, l logger.Interface) {
+//func NewBlogRoute(handler *gin.RouterGroup, t *blog_usecase.BlogUseCase, l logger.Interface) {
+func NewBlogRoute(handler *gin.RouterGroup, t intfaces.BlogUsecase, l logger.Interface) {
 	r := &BlogRoute{t, l}
 
 	h := handler.Group("/blogs")

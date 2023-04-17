@@ -41,10 +41,10 @@ func Run(cfg *config.Config) {
 	// Initializing a store for repository -.
 	store := db.NewStore(conn)
 
-	blogUsecase := *blog_usecase.NewBlogUseCase(store, cfg)
+	blogUsecase := blog_usecase.NewBlogUseCase(store, cfg)
 
 	// Passing also the basic auth middleware to all  Routers -.
-	v1.NewRouter(handler, l, &blogUsecase)
+	v1.NewRouter(handler, l, blogUsecase)
 
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
