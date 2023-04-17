@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/config"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
-	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/interfaces"
+	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/httpserver"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
@@ -41,10 +41,10 @@ func Run(cfg *config.Config) {
 	// Initializing a store for repository -.
 	store := db.NewStore(conn)
 
-	blogUsecase := blog_usecase.NewBlogUseCase(store, cfg)
+	blogUsecase := *blog_usecase.NewBlogUseCase(store, cfg)
 
 	// Passing also the basic auth middleware to all  Routers -.
-	v1.NewRouter(handler, l, *blogUsecase)
+	v1.NewRouter(handler, l, &blogUsecase)
 
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 

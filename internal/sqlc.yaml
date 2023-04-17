@@ -10,7 +10,7 @@ packages:
       output_models_file_name: "entity"
       emit_empty_slices: true
       emit_all_enum_values: true
-      output_db_file_name: "interfaces.go"
+      output_db_file_name: "intfaces.go"
       overrides:
           - db_type: "decimal"
             go_type: "github.com/shopspring/decimal"

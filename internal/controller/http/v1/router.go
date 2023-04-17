@@ -26,7 +26,7 @@ import (
 // @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
-func NewRouter(handler *gin.Engine, l logger.Interface, u blog_usecase.BlogUseCase) {
+func NewRouter(handler *gin.Engine, l logger.Interface, u *blog_usecase.BlogUseCase) {
 	// Options -.
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())

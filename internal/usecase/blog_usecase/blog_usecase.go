@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/utils"
 )
@@ -37,19 +38,8 @@ func (usecase *BlogUseCase) CreateBlog(ctx context.Context, description string) 
 	return &blog, nil
 }
 
-type ListBlogsParams struct {
-	Page  string `json:"page"`
-	Limit string `json:"limit"`
-}
-
-type listBlogsResponse struct {
-	Blog         []sqlc.Blog `json:"blogs"`
-	NextPage     string      `json:"next_page"`
-	PreviousPage string      `json:"previous_page"`
-}
-
 // ListBlogs -.
-func (usecase *BlogUseCase) ListBlogs(ctx context.Context, args ListBlogsParams) (*listBlogsResponse, error) {
+func (usecase *BlogUseCase) ListBlogs(ctx context.Context, args intfaces.ListBlogsParams) (*intfaces.ListBlogsResponse, error) {
 
 	page, err := utils.StringToInt32(args.Page)
 
@@ -76,5 +66,5 @@ func (usecase *BlogUseCase) ListBlogs(ctx context.Context, args ListBlogsParams)
 
 	nextPage, previousPage := utils.PaginatorPages(ctx, page, limit, len(blogs))
 
-	return &listBlogsResponse{blogs, nextPage, previousPage}, nil
+	return &intfaces.ListBlogsResponse{Blog: blogs, NextPage: nextPage, PreviousPage: previousPage}, nil
 }
