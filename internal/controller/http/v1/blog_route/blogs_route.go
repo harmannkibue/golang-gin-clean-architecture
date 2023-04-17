@@ -3,20 +3,21 @@ package blog_route
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
 	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"
 )
 
-type blogRoute struct {
-	u blog_usecase.BlogUseCase
+type BlogRoute struct {
+	u intfaces.BlogUsecase
 	l logger.Interface
 }
 
-func NewBlogRoute(handler *gin.RouterGroup, t blog_usecase.BlogUseCase, l logger.Interface) {
-	r := &blogRoute{t, l}
+//func NewBlogRoute(handler *gin.RouterGroup, t *blog_usecase.BlogUseCase, l logger.Interface) {
+func NewBlogRoute(handler *gin.RouterGroup, t intfaces.BlogUsecase, l logger.Interface) {
+	r := &BlogRoute{t, l}
 
 	h := handler.Group("/blogs")
 	{
@@ -41,7 +42,7 @@ type singleBlogResponse struct {
 // @Success     200 {object} singleBlogResponse
 // @Failure     400 {object} httputil.HTTPError
 // @Router      /blogs/{id} [get]
-func (route *blogRoute) blog(ctx *gin.Context) {
+func (route *BlogRoute) blog(ctx *gin.Context) {
 	id := ctx.Param("id")
 
 	blog, err := route.u.GetBlog(ctx, id)
@@ -78,7 +79,7 @@ type listBlogsResponse struct {
 // @Failure     400 {object} httputil.HTTPError
 // @Failure     500 {object} httputil.HTTPError
 // @Router      /blogs/create-blog/ [post]
-func (route *blogRoute) createBlog(ctx *gin.Context) {
+func (route *BlogRoute) createBlog(ctx *gin.Context) {
 	var body createBlogRequestBody
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
@@ -107,7 +108,7 @@ func (route *blogRoute) createBlog(ctx *gin.Context) {
 // @Success     200 {object} listBlogsResponse
 // @Failure     400 {object} httputil.HTTPError
 // @Router      /blogs/ [get]
-func (route *blogRoute) blogs(ctx *gin.Context) {
+func (route *BlogRoute) blogs(ctx *gin.Context) {
 
 	page := ctx.Request.URL.Query().Get("Page")
 	limit := ctx.Request.URL.Query().Get("ItemsPerPage")
@@ -119,7 +120,7 @@ func (route *blogRoute) blogs(ctx *gin.Context) {
 		limit = "10"
 	}
 
-	blogs, err := route.u.ListBlogs(ctx, blog_usecase.ListBlogsParams{
+	blogs, err := route.u.ListBlogs(ctx, intfaces.ListBlogsParams{
 		Page:  page,
 		Limit: limit,
 	})

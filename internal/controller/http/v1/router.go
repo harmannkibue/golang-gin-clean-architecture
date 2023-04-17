@@ -4,7 +4,7 @@ package v1
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1/blog_route"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
@@ -26,7 +26,8 @@ import (
 // @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
-func NewRouter(handler *gin.Engine, l logger.Interface, u blog_usecase.BlogUseCase) {
+//func NewRouter(handler *gin.Engine, l logger.Interface, u *blog_usecase.BlogUseCase) {
+func NewRouter(handler *gin.Engine, l logger.Interface, u intfaces.BlogUsecase) {
 	// Options -.
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())

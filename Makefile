@@ -71,6 +71,10 @@ dbDocs: ### Command used for documenting generating database schema documentatio
 	dbdocs build docs/db.dbml
 .PHONY: dbDocs
 
-mockeryGenerate: ### generates testing mocks using mockery tool
-	mockery --dir=internal/entity --name=Store --filename=store.go --output=internal/entity/mocks --outpkg=mocks
-.PHONY: mockeryGenerate
+mockeryGenerateBlogUsecase: ### generates testing mocks using mockery tool
+	mockery --dir=internal/entity/intfaces --name=BlogUsecase --filename=blog.go --output=internal/entity/mocks --outpkg=mocks
+.PHONY: mockeryGenerateBlogUsecase
+
+goTestCoverProfile: ### Used to run tests with coverage and display the output.Scans all the files and runs the tests if available
+	go test ./... -coverprofile=cover.out
+.PHONY: goTestCoverProfile
