@@ -47,7 +47,7 @@ func (route *BlogRoute) blog(ctx *gin.Context) {
 
 	blog, err := route.u.GetBlog(ctx, id)
 	if err != nil {
-		route.l.Error(err, "http - v1 - getting single bank")
+		route.l.Error(err, "http - v1 - getting single blog")
 		ctx.JSON(entity.GetStatusCode(err), entity.ErrorCodeResponse(err))
 		return
 	}

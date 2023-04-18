@@ -18,7 +18,7 @@ import (
 	"syscall"
 )
 
-// Run creates objects via constructors.
+// Run creates objects via constructors -.
 func Run(cfg *config.Config) {
 	l := logger.New(cfg.Log.Level)
 

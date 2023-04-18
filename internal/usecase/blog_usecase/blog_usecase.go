@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/google/uuid"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/utils"
@@ -21,7 +22,7 @@ func (usecase *BlogUseCase) GetBlog(ctx context.Context, id string) (*sqlc.Blog,
 
 	blog, err := usecase.store.GetBlog(ctx, uuID)
 	if err != nil {
-		return nil, fmt.Errorf("BlogUsecase - blog - uc.repo.GetBlog: %w", err)
+		return nil, entity.CreateError(entity.ErrNotFound.Error(), err.Error())
 	}
 
 	return &blog, nil
