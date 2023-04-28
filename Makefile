@@ -51,10 +51,6 @@ migrateDrop: ### Command used to drop the database migrations
 	migrate -path ./migrations -database "$(DB_URL)" -verbose drop
 .PHONY: migrateDrop
 
-mockGen: ### Generating mock for database mock testing.The package used is goMock
-	mockgen -package mockDb -destination internal/usecase/mock/store.go github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories Store
-.PHONY: mockGen
-
 sqlcInit: ### Command used to initialize an database query repository store.Package used is SQLC.
 	cd internal && sqlc init
 .PHONY: sqlcInit
