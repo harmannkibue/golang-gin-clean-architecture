@@ -4,7 +4,7 @@ import (
 	"context"
 	"database/sql"
 	"fmt"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repository/sqlc"
 )
 
 // Store This interface helps to mock the database during testing -.

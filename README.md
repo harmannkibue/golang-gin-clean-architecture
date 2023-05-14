@@ -73,7 +73,7 @@ There is always one _Run_ function in the `app.go` file, which "continues" the _
 This is where all the main objects are created.
 Dependency injection occurs through the "New ..." constructors (see Dependency Injection).
 This technique allows us to layer the application using the [Dependency Injection](#dependency-injection) principle.
-This makes the business logic independent from other layers.
+This makes the business logic independent of other layers.
 
 Next, we start the server and wait for signals in _select_ for graceful completion.
 If `app.go` starts to grow, you can split it into multiple files.
@@ -199,17 +199,8 @@ The same is shown in the picture:
 - **Use Cases** is business logic located in `internal/usecase`.
 
 The layer with which business logic directly interacts is usually called the _infrastructure_ layer.
-These can be repositories `internal/usecase/repo`, external webapi `internal/usecase/webapi`, any pkg, and other microservices.
+These can be repositories `internal/usecase/repository`, external microservices `internal/usecase/microservices`, any pkg, and other microservices.
 In the template, the _infrastructure_ packages are located inside `internal/usecase`.
-
-You can choose how to call the entry points as you wish. The options are:
-- controller (in our case)
-- delivery
-- transport
-- gateways
-- entrypoints
-- primary
-- input
 
 ### Additional layers
 The classic version of [Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html) was designed for building large monolithic applications and has 4 layers.

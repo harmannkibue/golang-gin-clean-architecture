@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
+	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repository/sqlc"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	_ "github.com/swaggo/swag/example/celler/httputil"
 	"net/http"

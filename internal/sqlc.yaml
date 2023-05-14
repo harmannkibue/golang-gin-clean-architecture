@@ -1,10 +1,10 @@
 version: 1
 packages:
-    - path: "./usecase/repositories"
+    - path: "./usecase/repository"
       name: "db"
       engine: "postgresql"
       schema: "../migrations"
-      queries: "./usecase/repositories/queries"
+      queries: "./usecase/repository/queries"
       emit_json_tags: true
       json_tags_case_style: "camel"
       output_models_file_name: "entity"
@@ -34,4 +34,4 @@ packages:
 # The steps to running sql c
 #1: sqlc init to create a yml file
 #2: create the queries file
-#3: run sqlc generate to create the entity structs and the crud operations repositories
+#3: run sqlc generate to create the entity structs and the crud operations repository

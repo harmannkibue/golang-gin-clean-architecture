@@ -2,7 +2,7 @@ package intfaces
 
 import (
 	"context"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repository/sqlc"
 )
 
 type BlogUsecase interface {

@@ -6,7 +6,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/harmannkibue/golang_gin_clean_architecture/config"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/mocks"
-	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repositories/sqlc"
+	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repository/sqlc"
 	"github.com/stretchr/testify/assert"
 	"net/http/httptest"
 	testing2 "testing"
