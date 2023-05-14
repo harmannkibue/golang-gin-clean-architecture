@@ -23,8 +23,8 @@ composeDown: ### Command to stop docker containers
 	docker-compose  down --remove-orphans
 .PHONY: composeDown
 
-swagInit: ### Command used to initialize swagger api documentation.Uses swaggo and gin swagger packages
-	swag init --parseInternal -g  internal/controller/http/v1/router.go
+swagInit: ### Command used to initialize swagger api documentation.Uses swaggo and gin swagger packages.Run go get -u github.com/swaggo/swag/cmd/swag@v1.6.7 command first
+	swag init --parseInternal --parseInternal -g  internal/controller/http/v1/router.go
 .PHONY: swagInit
 
 runserver: ### Starts server with incorporated air tool for hot reloads
@@ -71,6 +71,6 @@ mockeryGenerateBlogUsecase: ### generates testing mocks using mockery tool
 	mockery --dir=internal/entity/intfaces --name=BlogUsecase --filename=blog.go --output=internal/entity/mocks --outpkg=mocks
 .PHONY: mockeryGenerateBlogUsecase
 
-goTestCoverProfile: ### Used to run tests with coverage and display the output.Scans all the files and runs the tests if available
+testWithCoverProfile: ### Used to run tests with coverage and display the output.Scans all the files and runs the tests if available
 	go test ./... -coverprofile=cover.out
 .PHONY: goTestCoverProfile

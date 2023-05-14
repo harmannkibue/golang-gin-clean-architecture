@@ -33,18 +33,13 @@ type (
 	// PG -.
 	PG struct {
 		PoolMax        int    `env-required:"true" yaml:"pool_max" env:"PG_POOL_MAX"`
-		VaUser         string `env-required:"true"  yaml:"pg_user"  env:"VA_USER"`
-		VaPass         string `env-required:"true"  yaml:"pg_pass"   env:"VA_PASSWORD"`
-		VaDb           string `env-required:"true"   yaml:"pg_db"      env:"VA_DB"`
-		VaHost         string `env-required:"true"   yaml:"pg_host"  env:"VA_HOST"`
-		VaPort         string `env-required:"true"   yaml:"pg_port"  env:"VA_PORT"`
-		VaSSL          string `env-required:"true"   yaml:"pg_ssl"    env:"VA_IGNORE_SSL"`
 		VaTimezone     string `env-required:"true"   yaml:"pg_timezone"    env:"VA_TIMEZONE"`
 		DatabaseDriver string `env-required:"true"   yaml:"database_driver"    env:"DATABASE_DRIVER"`
+		PostgresUrl    string `env-required:"true"   yaml:"PG_URL"    env:"PG_URL"`
 	}
 )
 
-// NewConfig returns app config.
+// NewConfig returns app config -.
 func NewConfig() (*Config, error) {
 
 	cfg := &Config{}

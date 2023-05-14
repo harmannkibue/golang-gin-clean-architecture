@@ -15,7 +15,7 @@ type BlogRoute struct {
 	l logger.Interface
 }
 
-//func NewBlogRoute(handler *gin.RouterGroup, t *blog_usecase.BlogUseCase, l logger.Interface) {
+// NewBlogRoute Initialises a new http router for the blogs -.
 func NewBlogRoute(handler *gin.RouterGroup, t intfaces.BlogUsecase, l logger.Interface) {
 	r := &BlogRoute{t, l}
 

@@ -10,15 +10,10 @@ logger:
   log_level: 'debug'
   rollbar_env: 'go-clean-template'
 
+
+
 postgres:
   database_driver: "postgres"
   pool_max: 2
-  pg_ssl: 'disable'
   pg_timezone: 'Africa/Nairobi'
-
-  pg_user: 'postgres'
-  pg_pass: 'postgres'
-  pg_db: 'BLOG_DATABASE'
-  pg_host: 'localhost'
-  pg_port: '5433'
-
+  PG_URL: 'postgresql://postgres:password@localhost:5432/BLOG_DATABASE?sslmode=disable'

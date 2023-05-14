@@ -15,7 +15,7 @@ const (
 
 // New -.
 func New(cfg *config.Config) (*sql.DB, error) {
-	dbSource := BuildPostgresUrl(cfg)
+	dbSource := cfg.PG.PostgresUrl
 
 	if len(dbSource) == 0 {
 		log.Fatal("Postgres database url configs not passed")

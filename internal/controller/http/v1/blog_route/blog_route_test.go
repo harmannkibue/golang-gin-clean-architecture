@@ -16,9 +16,9 @@ import (
 	"time"
 )
 
-//https://dev.to/jacobsngoodwin/04-testing-first-gin-http-handler-9m0
+//https://dev.to/jacobsngoodwin/04-testing-first-gin-http-handler-9m0 -.
 func TestGetByID(t *testing.T) {
-	// Setup
+	// Setup -.
 	gin.SetMode(gin.TestMode)
 
 	t.Run("Success", func(t *testing.T) {
