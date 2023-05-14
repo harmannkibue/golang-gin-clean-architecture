@@ -13,8 +13,7 @@ This project shows how to organise golang microservice code according to Robert 
 It aims to :
 - Show how to organise the codebase to avoid supergheti.
 - Show the code generation tooling for efficiency. 
-- Demonstration of 
-- Demonstrate a scalable and easy to maintain golang structure
+- Demonstrate a scalable and easy to maintain golang microservice structure
 
 ## Technology/Tooling
 - [Gin gonic](https://github.com/gin-gonic/gin) http framework
