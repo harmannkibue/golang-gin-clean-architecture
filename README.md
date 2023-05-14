@@ -55,6 +55,7 @@ Configuration and logger initialization. Then the main function "continues" in
 Configuration. First, `config.yml` is read, then environment variables overwrite the yaml config if they match.
 The config structure is in the `config.go`.
 The `env-required: true` tag obliges you to specify a value (either in yaml, or in environment variables).
+This design allows to pass variables from a container orchastrating tool like (Kubernetes](https://kubernetes.io/docs/concepts/configuration/)
 
 For configuration, we chose the [cleanenv](https://github.com/ilyakaznacheev/cleanenv) library.
 It does not have many stars on GitHub, but is simple and meets all the requirements.
