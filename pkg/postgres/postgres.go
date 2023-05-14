@@ -18,7 +18,7 @@ func New(cfg *config.Config) (*sql.DB, error) {
 	dbSource := cfg.PG.PostgresUrl
 
 	if len(dbSource) == 0 {
-		log.Fatal("Postgres database url configs not passed")
+		log.Fatal("POSTGRES URL CONFIGS NOT PASSED ")
 	}
 
 	// Opening a driver typically will not attempt to connect to the database.

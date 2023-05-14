@@ -3,15 +3,29 @@ services:
   blog-app:
     build: .
     container_name: 'blog-app'
-    image: va-admin
+    image: blog-image
     environment:
-      PG_URL: 'postgresql://user:blogs@postgres:5432/BLOG_DB?sslmode=disable'
+      PG_URL: 'postgresql://postgres:password@postgres:5432/BLOG_DB?sslmode=disable'
     ports:
       - "8089:8089"
     networks:
-      - user-network
+      - blog-network
     command: [ "/app/main" ]
 
+  postgres:
+    container_name: 'postgres'
+    image: postgres:14-alpine
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: 'postgres'
+      POSTGRES_PASSWORD: 'password'
+      POSTGRES_DB: 'BLOG_DB'
+    ports:
+      - "5432:5432"
+    networks:
+      - blog-network
+
 networks:
-  user-network:
+  blog-network:
     driver: bridge

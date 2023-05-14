@@ -33,7 +33,7 @@ func (usecase *BlogUseCase) CreateBlog(ctx context.Context, description string) 
 	blog, err := usecase.store.CreateBlog(ctx, sql.NullString{String: description, Valid: true})
 
 	if err != nil {
-		return nil, fmt.Errorf("BlogUsecase - store - uc.usecase.CreateBlog.: %w", err)
+		return nil, fmt.Errorf("BlogUsecase - uc.usecase.CreateBlog.: %w", err)
 	}
 
 	return &blog, nil
@@ -62,7 +62,7 @@ func (usecase *BlogUseCase) ListBlogs(ctx context.Context, args intfaces.ListBlo
 	})
 
 	if err != nil {
-		return nil, fmt.Errorf("BankUsecase - bank - uc.usecase.GetBanks: %w", err)
+		return nil, fmt.Errorf("BlogUsecase - bank - uc.usecase.ListBlogs: %w", err)
 	}
 
 	nextPage, previousPage := utils.PaginatorPages(ctx, page, limit, len(blogs))

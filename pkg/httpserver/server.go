@@ -36,7 +36,7 @@ func New(handler http.Handler, opts ...Option) *Server {
 		shutdownTimeout: _defaultShutdownTimeout,
 	}
 
-	// Custom options
+	// Custom options -.
 	for _, opt := range opts {
 		opt(s)
 	}

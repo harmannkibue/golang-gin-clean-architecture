@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"strings"
@@ -58,11 +57,6 @@ func GetStatusCode(err error) int {
 	default:
 		return http.StatusInternalServerError
 	}
-}
-
-// ErrorResponse This is deprecated and should not be used -.
-func ErrorResponse(err error) gin.H {
-	return gin.H{"error": err.Error()}
 }
 
 // Gets the error and extracts the error code from its json string -.
