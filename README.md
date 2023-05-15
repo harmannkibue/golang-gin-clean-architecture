@@ -1,4 +1,4 @@
-(docs/img/golang-gopher.png)
+docs/img/golang-gopher.png
 
 # Golang Clean template
 
