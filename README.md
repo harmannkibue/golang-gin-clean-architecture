@@ -1,6 +1,6 @@
 (docs/img/golang-gopher.png)
 
-# Golang Clean template
+# Golang Clean Architecture
 
 Clean Architecture template for Golang Microservices
 

@@ -10,8 +10,6 @@ logger:
   log_level: 'debug'
   rollbar_env: 'go-clean-template'
 
-
-
 postgres:
   database_driver: "postgres"
   pool_max: 2
