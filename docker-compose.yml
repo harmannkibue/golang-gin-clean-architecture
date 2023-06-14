@@ -26,6 +26,9 @@ services:
     networks:
       - blog-network
 
+volumes:
+  pg-data:
+
 networks:
   blog-network:
     driver: bridge
