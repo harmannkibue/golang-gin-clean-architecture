@@ -5,7 +5,7 @@ CREATE TYPE "user_roles" AS ENUM (
 
 CREATE TABLE "blog" (
                         "id" uuid PRIMARY KEY DEFAULT (gen_random_uuid ()),
-                        "descriptions" varchar(15),
+                        "descriptions" text,
                         "user_role" user_roles NOT NULL DEFAULT 'author',
                         "created_at" timestamptz NOT NULL DEFAULT (now()),
                         "updated_at" timestamptz DEFAULT (now())
