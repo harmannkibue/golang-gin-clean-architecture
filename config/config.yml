@@ -14,4 +14,4 @@ postgres:
   database_driver: "postgres"
   pool_max: 2
   pg_timezone: 'Africa/Nairobi'
-  PG_URL: 'postgresql://postgres:password@localhost:5432/BLOG_DATABASE?sslmode=disable'
+  PG_URL: 'postgresql://postgres:password@localhost:5432/BLOG_DB?sslmode=disable'

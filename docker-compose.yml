@@ -7,7 +7,7 @@ services:
     environment:
       PG_URL: 'postgresql://postgres:password@postgres:5432/BLOG_DB?sslmode=disable'
     ports:
-      - "8089:8089"
+      - "8080:8080"
     networks:
       - blog-network
     command: [ "/app/main" ]
