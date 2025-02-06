@@ -149,7 +149,11 @@ func NewBlogUseCase(store Store, config *config.Config) BlogUsecase {
 }
 ```
 
-### Key idea
+<h3 align="center">Key idea</h3>
+
+<p align="center">
+  <img src="docs/img/golang-clean-architecture.jpg" alt="Clean Architecture">
+</p>
 Programmers realize the optimal architecture for an application after most of the code has been written.
 
 > A good architecture allows decisions to be delayed to as late as possible.
@@ -188,13 +192,6 @@ The communication between them is carried out through `usecase` (business logic)
 ```
 The symbols > and < show the intersection of layer boundaries through Interfaces.
 The same is shown in the picture:
-
-<h3 align="center">Layers</h3>
-
-<p align="center">
-  <img src="docs/img/golang-clean-architecture.jpg" alt="Clean Architecture">
-</p>
-
 
 ### Common terms
 
