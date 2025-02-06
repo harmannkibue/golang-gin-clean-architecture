@@ -189,10 +189,12 @@ The communication between them is carried out through `usecase` (business logic)
 The symbols > and < show the intersection of layer boundaries through Interfaces.
 The same is shown in the picture:
 
-![Example](docs/img/example-http-db.png)
+<h3 align="center">Layers</h3>
 
-### Layers
-![Example](docs/img/layers-2.png)
+<p align="center">
+  <img src="docs/img/golang-clean-architecture.jpg" alt="Clean Architecture">
+</p>
+
 
 ### Common terms
 
