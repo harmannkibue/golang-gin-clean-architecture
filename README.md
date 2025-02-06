@@ -149,16 +149,15 @@ func NewBlogUseCase(store Store, config *config.Config) BlogUsecase {
 }
 ```
 
-<h3 align="center">Key idea</h3>
-
-<p align="center">
-  <img src="docs/img/golang-clean-architecture.jpg" alt="Clean Architecture">
-</p>
 Programmers realize the optimal architecture for an application after most of the code has been written.
 
 > A good architecture allows decisions to be delayed to as late as possible.
 
-### The main principle
+<h3 align="center">The main principle</h3>
+
+<p align="center">
+  <img src="docs/img/golang-clean-architecture.jpg" alt="Clean Architecture">
+</p>
 Dependency Inversion (the same one from SOLID) is the principle of dependency inversion.
 The direction of dependencies goes from the outer layer to the inner layer.
 Due to this, business logic and entities remain independent from other parts of the system.
