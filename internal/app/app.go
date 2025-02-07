@@ -7,8 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/harmannkibue/golang_gin_clean_architecture/config"
 	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
-	db "github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
+	entity "github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
+	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/mratiba_usecase"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/httpserver"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
 	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/postgres"
@@ -39,12 +39,19 @@ func Run(cfg *config.Config) {
 	}(conn)
 
 	// Initializing a store for repository -.
-	store := db.NewStore(conn)
+	store := entity.NewStore(conn)
 
-	blogUsecase := blog_usecase.NewBlogUseCase(store, cfg)
+	mRatibaUsecase := mratiba_usecase.NewMRatibaUseCase(store, cfg)
+
+	// Create Dependency Container
+	deps := entity.Dependencies{
+		Logger:         l,
+		MRatibaUsecase: mRatibaUsecase,
+		// TransactionUsecase: transaction_usecase.NewTransactionUseCase(store, cfg),  // Future extensibility
+	}
 
 	// Passing also the basic auth middleware to all  Routers -.
-	v1.NewRouter(handler, l, blogUsecase)
+	v1.NewRouter(handler, deps)
 
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 

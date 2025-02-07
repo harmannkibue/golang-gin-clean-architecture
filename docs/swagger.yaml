@@ -1,30 +1,5 @@
 basePath: /api/v1
 definitions:
-  blog_route.createBlogRequestBody:
-    properties:
-      description:
-        type: string
-    type: object
-  blog_route.createBlogResponse:
-    properties:
-      created_at:
-        type: string
-      message:
-        type: string
-    type: object
-  blog_route.listBlogsResponse:
-    properties:
-      blogs:
-        items:
-          $ref: '#/definitions/blog_route.createBlogResponse'
-        type: array
-    type: object
-  blog_route.singleBlogResponse:
-    properties:
-      blog:
-        $ref: '#/definitions/sqlc.Blog'
-        type: object
-    type: object
   httputil.HTTPError:
     properties:
       code:
@@ -34,104 +9,81 @@ definitions:
         example: status bad request
         type: string
     type: object
-  sqlc.Blog:
+  intfaces.MpesaRatibaRequestBody:
     properties:
-      createdAt:
+      AccountReference:
         type: string
-      descriptions:
+      Amount:
         type: string
-      id:
+      BusinessShortCode:
         type: string
-      updatedAt:
+      CallBackURL:
         type: string
-      userRole:
+      EndDate:
         type: string
+      Frequency:
+        type: string
+      PartyA:
+        type: string
+      ReceiverPartyIdentifierType:
+        type: string
+      StandingOrderName:
+        type: string
+      StartDate:
+        type: string
+      TransactionDesc:
+        type: string
+      TransactionType:
+        type: string
+    type: object
+  intfaces.MpesaRatibaRequestResponseBody:
+    properties:
+      ResponseBody:
+        properties:
+          responseCode:
+            type: string
+          responseDescription:
+            type: string
+        type: object
+      ResponseHeader:
+        properties:
+          responseCode:
+            type: string
+          responseDescription:
+            type: string
+          responseRefID:
+            type: string
+        type: object
     type: object
 host: localhost:8080
 info:
   contact: {}
   description: |-
-    Illustration of uncle Bob's clean architecture using a demo blogs api.
+    Spectacular Billing Golang Payment Services Connector Clean Architecture using Uncle Bob's clean architecture principles.
     It serves as Blog.
-  license: {}
-  title: Gin Gonic golang Clean Architecture.
+  title: Spectacular SAS Billing.
   version: "1.0"
 paths:
-  /blogs/:
-    get:
-      consumes:
-      - application/json
-      description: Show all blogs registered
-      operationId: Fetch Blog
-      parameters:
-      - description: "1"
-        in: query
-        name: Page
-        type: string
-      - description: "10"
-        in: query
-        name: ItemsPerPage
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/blog_route.listBlogsResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-      summary: List all the Blogs
-      tags:
-      - Blogs
-  /blogs/{id}:
-    get:
-      consumes:
-      - application/json
-      description: Show a single blog registered
-      operationId: Single blog
-      parameters:
-      - description: blog ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/blog_route.singleBlogResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-      summary: Fetch single blog by ID
-      tags:
-      - Blogs
-  /blogs/create-blog/:
+  /mratiba/standing-orders:
     post:
       consumes:
       - application/json
-      description: Create a blog
-      operationId: Create a blog
+      description: Create M-Pesa Ratiba standing order
+      operationId: Create M-Pesa Ratiba standing order
       parameters:
-      - description: Create blog request body
+      - description: Create Mpesa Ratiba standing order for subscription management
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/blog_route.createBlogRequestBody'
+          $ref: '#/definitions/intfaces.MpesaRatibaRequestBody'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/blog_route.createBlogResponse'
+            $ref: '#/definitions/intfaces.MpesaRatibaRequestResponseBody'
         "400":
           description: Bad Request
           schema:
@@ -140,9 +92,9 @@ paths:
           description: Internal Server Error
           schema:
             $ref: '#/definitions/httputil.HTTPError'
-      summary: Create a blog
+      summary: Create M-Pesa Ratiba standing order
       tags:
-      - Blogs
+      - Mpesa Ratiba
 securityDefinitions:
   BasicAuth:
     type: basic

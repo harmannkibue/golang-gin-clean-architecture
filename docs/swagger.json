@@ -1,62 +1,17 @@
 {
     "swagger": "2.0",
     "info": {
-        "description": "Illustration of uncle Bob's clean architecture using a demo blogs api.\nIt serves as Blog.",
-        "title": "Gin Gonic golang Clean Architecture.",
+        "description": "Spectacular Billing Golang Payment Services Connector Clean Architecture using Uncle Bob's clean architecture principles.\nIt serves as Blog.",
+        "title": "Spectacular SAS Billing.",
         "contact": {},
-        "license": {},
         "version": "1.0"
     },
     "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
-        "/blogs/": {
-            "get": {
-                "description": "Show all blogs registered",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Blogs"
-                ],
-                "summary": "List all the Blogs",
-                "operationId": "Fetch Blog",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "1",
-                        "name": "Page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "10",
-                        "name": "ItemsPerPage",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/blog_route.listBlogsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/blogs/create-blog/": {
+        "/mratiba/standing-orders": {
             "post": {
-                "description": "Create a blog",
+                "description": "Create M-Pesa Ratiba standing order",
                 "consumes": [
                     "application/json"
                 ],
@@ -64,18 +19,18 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Blogs"
+                    "Mpesa Ratiba"
                 ],
-                "summary": "Create a blog",
-                "operationId": "Create a blog",
+                "summary": "Create M-Pesa Ratiba standing order",
+                "operationId": "Create M-Pesa Ratiba standing order",
                 "parameters": [
                     {
-                        "description": "Create blog request body",
+                        "description": "Create Mpesa Ratiba standing order for subscription management",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/blog_route.createBlogRequestBody"
+                            "$ref": "#/definitions/intfaces.MpesaRatibaRequestBody"
                         }
                     }
                 ],
@@ -83,7 +38,7 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/blog_route.createBlogResponse"
+                            "$ref": "#/definitions/intfaces.MpesaRatibaRequestResponseBody"
                         }
                     },
                     "400": {
@@ -100,87 +55,9 @@
                     }
                 }
             }
-        },
-        "/blogs/{id}": {
-            "get": {
-                "description": "Show a single blog registered",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Blogs"
-                ],
-                "summary": "Fetch single blog by ID",
-                "operationId": "Single blog",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "blog ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/blog_route.singleBlogResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
         }
     },
     "definitions": {
-        "blog_route.createBlogRequestBody": {
-            "type": "object",
-            "properties": {
-                "description": {
-                    "type": "string"
-                }
-            }
-        },
-        "blog_route.createBlogResponse": {
-            "type": "object",
-            "properties": {
-                "created_at": {
-                    "type": "string"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "blog_route.listBlogsResponse": {
-            "type": "object",
-            "properties": {
-                "blogs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/blog_route.createBlogResponse"
-                    }
-                }
-            }
-        },
-        "blog_route.singleBlogResponse": {
-            "type": "object",
-            "properties": {
-                "blog": {
-                    "type": "object",
-                    "$ref": "#/definitions/sqlc.Blog"
-                }
-            }
-        },
         "httputil.HTTPError": {
             "type": "object",
             "properties": {
@@ -194,23 +71,74 @@
                 }
             }
         },
-        "sqlc.Blog": {
+        "intfaces.MpesaRatibaRequestBody": {
             "type": "object",
             "properties": {
-                "createdAt": {
+                "AccountReference": {
                     "type": "string"
                 },
-                "descriptions": {
+                "Amount": {
                     "type": "string"
                 },
-                "id": {
+                "BusinessShortCode": {
                     "type": "string"
                 },
-                "updatedAt": {
+                "CallBackURL": {
                     "type": "string"
                 },
-                "userRole": {
+                "EndDate": {
                     "type": "string"
+                },
+                "Frequency": {
+                    "type": "string"
+                },
+                "PartyA": {
+                    "type": "string"
+                },
+                "ReceiverPartyIdentifierType": {
+                    "type": "string"
+                },
+                "StandingOrderName": {
+                    "type": "string"
+                },
+                "StartDate": {
+                    "type": "string"
+                },
+                "TransactionDesc": {
+                    "type": "string"
+                },
+                "TransactionType": {
+                    "type": "string"
+                }
+            }
+        },
+        "intfaces.MpesaRatibaRequestResponseBody": {
+            "type": "object",
+            "properties": {
+                "ResponseBody": {
+                    "type": "object",
+                    "properties": {
+                        "responseCode": {
+                            "type": "string"
+                        },
+                        "responseDescription": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "ResponseHeader": {
+                    "type": "object",
+                    "properties": {
+                        "responseCode": {
+                            "type": "string"
+                        },
+                        "responseDescription": {
+                            "type": "string"
+                        },
+                        "responseRefID": {
+                            "type": "string"
+                        }
+                    }
                 }
             }
         }

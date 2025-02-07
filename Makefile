@@ -24,7 +24,7 @@ composeDown: ### Command to stop docker containers
 .PHONY: composeDown
 
 swagInit: ### Command used to initialize swagger api documentation.Uses swaggo and gin swagger packages.Run go get -u github.com/swaggo/swag/cmd/swag@v1.6.7 command first
-	swag init --parseInternal --parseInternal -g  internal/controller/http/v1/router.go
+	swag init --parseDependency --parseInternal -g  internal/controller/http/v1/router.go
 .PHONY: swagInit
 
 runserver: ### Starts server with incorporated air tool for hot reloads
