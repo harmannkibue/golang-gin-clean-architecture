@@ -1,0 +1,57 @@
+name: Build & Deploy SpectaBill PSP Connector
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Log in to GitHub Container Registry
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+
+      - name: Set Repository Owner (Lowercase)
+        run: echo "REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ghcr.io/$REPO_OWNER/spectabill-psp-connector:latest .
+
+      - name: Push Docker Image to GHCR
+        run: |
+          docker push ghcr.io/$REPO_OWNER/spectabill-psp-connector:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Install sshpass
+        run: sudo apt-get update && sudo apt-get install -y sshpass
+
+      - name: SSH into Server & Deploy
+        run: |
+          sshpass -p "${{ secrets.VPS_PASSWORD }}" ssh -o StrictHostKeyChecking=no ${{ secrets.VPS_USER }}@${{ secrets.VPS_HOST }} << 'EOF'
+            cd ${{ secrets.VPS_PATH }}
+          
+            echo "Logging into GitHub Container Registry..."
+            echo "${{ secrets.GHCR_PAT }}" | sudo -S docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+            echo "Pulling latest image..."
+            echo "${{ secrets.VPS_PASSWORD }}" | sudo -S docker pull ghcr.io/${{ github.repository_owner }}/spectabill-psp-connector:latest
+
+            echo "Stopping and removing old container..."
+            echo "${{ secrets.VPS_PASSWORD }}" | sudo -S docker-compose stop spectabill-psp-connector
+            echo "${{ secrets.VPS_PASSWORD }}" | sudo -S docker-compose rm -f spectabill-psp-connector
+
+            echo "Rebuilding and restarting the service..."
+            echo "${{ secrets.VPS_PASSWORD }}" | sudo -S docker-compose up -d --build spectabill-psp-connector
+
+            echo "Cleaning up unused Docker images..."
+            echo "${{ secrets.VPS_PASSWORD }}" | sudo -S docker system prune -f
+          EOF

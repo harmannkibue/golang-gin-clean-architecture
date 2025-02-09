@@ -3,7 +3,7 @@ services:
   spectabill-psp-connector-app:
     build: .
     container_name: 'spectabill-psp-connector-app'
-    image: blog-image
+    image: spectabill-psp-connector-app
     environment:
       PG_URL: 'postgresql://postgres:password@postgres:5432/BLOG_DB?sslmode=disable'
     ports:
