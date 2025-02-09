@@ -2,6 +2,7 @@ package mratiba_usecase
 
 import (
 	"context"
+	"fmt"
 	"github.com/harmannkibue/golang-mpesa-sdk/pkg/daraja"
 	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/entity/intfaces"
 	"log"
@@ -48,6 +49,20 @@ func (u MRatibaUseCase) CreateMpesaStandingOrder(ctx context.Context, args intfa
 	}
 
 	log.Printf("Mpesa Ratiba Response %+v", ratibaResponse)
+
+	msg, err := u.MockMpesaRatibaCallBack(ctx, intfaces.MockMratibaCallbackRequest{
+		CallBackUrl:   args.CallBackURL,
+		ResponseCode:  ratibaResponse.ResponseHeader.ResponseCode,
+		ResponseRefId: ratibaResponse.ResponseHeader.ResponseRefID,
+		Msisdn:        args.PartyA,
+	})
+
+	if err != nil {
+		fmt.Println("MOCK CALLBACK RESPONSE MESSAGE ", msg)
+		return nil, err
+	}
+
+	fmt.Println("MOCK CALLBACK RESPONSE MESSAGE ", msg)
 
 	return &intfaces.MpesaRatibaRequestResponseBody{
 		ResponseHeader: ratibaResponse.ResponseHeader,
