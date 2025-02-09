@@ -3,15 +3,15 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1/mpesa_ratiba_route"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/controller/http/v1/mpesa_ratiba_route"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/entity/intfaces"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 
 	// Swagger docs -.
-	_ "github.com/harmannkibue/golang_gin_clean_architecture/docs"
+	_ "github.com/harmannkibue/spectabill_psp_connector_clean_architecture/docs"
 )
 
 // NewRouter -.

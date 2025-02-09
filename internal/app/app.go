@@ -5,13 +5,12 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
-	entity "github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/mratiba_usecase"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/httpserver"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/postgres"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/config"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/controller/http/v1"
+	entity "github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/entity/intfaces"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/usecase/mratiba_usecase"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/pkg/httpserver"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/pkg/logger"
 	_ "github.com/lib/pq"
 	"os"
 	"os/signal"
@@ -25,25 +24,29 @@ func Run(cfg *config.Config) {
 	// HTTP Server -.
 	handler := gin.Default()
 
-	conn, err := postgres.New(cfg)
+	// TODO: Uncomment this code if database connection to actual db is required -.
+	// conn, err := postgres.New(cfg)
+	// if err != nil {
+	//	fmt.Errorf("failed to connect to database %w", err)
+	//}
+	//defer func(conn *sql.DB) {
+	//	err := conn.Close()
+	//	if err != nil {
+	//		panic("ERROR CLOSING POSTGRES CONNECTION")
+	//	}
+	//}(conn)
 
-	if err != nil {
-		fmt.Errorf("failed to connect to database %w", err)
-	}
-
-	defer func(conn *sql.DB) {
-		err := conn.Close()
-		if err != nil {
-			panic("ERROR CLOSING POSTGRES CONNECTION")
-		}
-	}(conn)
+	// Initialise a mock database connection. NB only required in situations which a database connection is not required for the system -.
+	conn := &sql.DB{}
+	var err error
 
 	// Initializing a store for repository -.
 	store := entity.NewStore(conn)
+	daraja := entity.NewDarajaFactory()
 
-	mRatibaUsecase := mratiba_usecase.NewMRatibaUseCase(store, cfg)
+	mRatibaUsecase := mratiba_usecase.NewMRatibaUseCase(store, cfg, daraja)
 
-	// Create Dependency Container
+	// Create Dependency Container -.
 	deps := entity.Dependencies{
 		Logger:         l,
 		MRatibaUsecase: mRatibaUsecase,
@@ -66,7 +69,7 @@ func Run(cfg *config.Config) {
 		l.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
 	}
 
-	// Shutdown
+	// Shutdown -.
 	err = httpServer.Shutdown()
 
 	if err != nil {

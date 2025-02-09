@@ -3,7 +3,7 @@ package postgres
 
 import (
 	"database/sql"
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/config"
 	"log"
 )
 

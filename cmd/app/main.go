@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/app"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/config"
+	"github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/app"
 	"log"
 )
 

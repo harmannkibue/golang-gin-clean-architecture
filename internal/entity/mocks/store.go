@@ -9,7 +9,7 @@ import (
 
 	sql "database/sql"
 
-	sqlc "github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/repository/sqlc"
+	sqlc "github.com/harmannkibue/spectabill_psp_connector_clean_architecture/internal/usecase/repository/sqlc"
 
 	uuid "github.com/google/uuid"
 )
