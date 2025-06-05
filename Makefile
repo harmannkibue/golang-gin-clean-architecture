@@ -1,7 +1,7 @@
 include .env.example
 export
 
-DB_URL = "postgresql://postgres:password@localhost:5432/BLOG_DB?sslmode=disable"
+DB_URL = "postgresql://postgres:password@postgres:5432/BLOG_DB?sslmode=disable"
 
 # HELP =================================================================================================================
 # This will output the help for each task
