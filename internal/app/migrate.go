@@ -21,19 +21,13 @@ const (
 )
 
 func init() {
-	cfg, erro := config.NewConfig()
+	cfg, err := config.NewConfig()
 
-	if erro != nil {
+	if err != nil {
 		log.Fatalf("Failed to load configs---------")
 	}
 
-	databaseURL := BuildPostgresUrl(cfg)
-
-	if len(databaseURL) == 0 {
-		log.Fatalf("migrate: environment variable not declared: PG_URL")
-	}
-
-	databaseURL += "?sslmode=disable"
+	databaseURL := cfg.PG.PostgresUrl
 
 	var (
 		attempts = _defaultAttempts

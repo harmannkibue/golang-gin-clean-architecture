@@ -26,7 +26,7 @@ import (
 // @securityDefinitions.basic BasicAuth
 // @in header
 // @name Authorization
-func NewRouter(handler *gin.Engine, l logger.Interface, u intfaces.BlogUsecase) {
+func NewRouter(handler *gin.Engine, l logger.Interface, u intfaces.Dependencies) {
 	// Options -.
 	handler.Use(gin.Logger())
 	handler.Use(gin.Recovery())
@@ -58,6 +58,6 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u intfaces.BlogUsecase) 
 	unversionedGroup := handler.Group("/api/v1")
 
 	{
-		blog_route.NewBlogRoute(unversionedGroup, u, l)
+		blog_route.NewBlogRoute(unversionedGroup, u.BlogUsecase, l)
 	}
 }
