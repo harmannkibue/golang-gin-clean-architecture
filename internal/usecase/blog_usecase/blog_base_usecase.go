@@ -10,7 +10,7 @@ type BlogUseCase struct {
 	store  intfaces.Store
 }
 
-func NewBlogUseCase(store intfaces.Store, config *config.Config) intfaces.BlogUsecase {
+func NewBlogUseCase(store intfaces.Store, config *config.Config) intfaces.IntBlogUsecase {
 	return &BlogUseCase{
 		store:  store,
 		config: config,

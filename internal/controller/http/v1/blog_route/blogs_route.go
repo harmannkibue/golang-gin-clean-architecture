@@ -11,12 +11,12 @@ import (
 )
 
 type BlogRoute struct {
-	u intfaces.BlogUsecase
+	u intfaces.IntBlogUsecase
 	l logger.Interface
 }
 
 // NewBlogRoute Initialises a new http router for the blogs -.
-func NewBlogRoute(handler *gin.RouterGroup, t intfaces.BlogUsecase, l logger.Interface) {
+func NewBlogRoute(handler *gin.RouterGroup, t intfaces.IntBlogUsecase, l logger.Interface) {
 	r := &BlogRoute{t, l}
 
 	h := handler.Group("/blogs")
