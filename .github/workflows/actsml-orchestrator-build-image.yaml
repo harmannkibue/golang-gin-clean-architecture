@@ -1,0 +1,37 @@
+name: 🚀 Jobs Orchestrator To GHCR
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Target environment'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📦 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔐 Log in to GitHub Container Registry (GHCR)
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: 🏗 Build Docker image
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=${{ github.event.inputs.environment }}
+          docker build \
+            -t ghcr.io/$REPO_OWNER/actsml-jobs-orchestrator:$TAG .
+
+      - name: 🚀 Push Docker image to GHCR
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=${{ github.event.inputs.environment }}
+          docker push ghcr.io/$REPO_OWNER/actsml-jobs-orchestrator:$TAG

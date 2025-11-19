@@ -31,7 +31,7 @@ const docTemplate = `{
                 "operationId": "Create a Job",
                 "parameters": [
                     {
-                        "description": "Create blog request body",
+                        "description": "Create job request body",
                         "name": "request",
                         "in": "body",
                         "required": true,

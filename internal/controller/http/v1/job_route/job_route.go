@@ -38,7 +38,7 @@ type createJobResponse struct {
 // @Tags  	    Job
 // @Accept      json
 // @Produce     json
-// @Param       request body createJobRequestBody true "Create blog request body"
+// @Param       request body createJobRequestBody true "Create job request body"
 // @Success     201 {object} createJobResponse
 // @Failure     400 {object} entity.HTTPError
 // @Failure     500 {object} entity.HTTPError

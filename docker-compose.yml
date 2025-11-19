@@ -1,0 +1,15 @@
+version: '3.9'
+services:
+  actsml-orchestrator:
+    build: .
+    container_name: 'actsml-orchestrator'
+    image: actsml-orchestrator-image
+    ports:
+      - "8080:8080"
+    networks:
+      - job-network
+    command: [ "/app/main" ]
+
+networks:
+  job-network:
+    driver: bridge

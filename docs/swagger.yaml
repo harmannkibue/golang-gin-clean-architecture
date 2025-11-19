@@ -35,7 +35,7 @@ paths:
       description: Create a Job
       operationId: Create a Job
       parameters:
-      - description: Create blog request body
+      - description: Create job request body
         in: body
         name: request
         required: true

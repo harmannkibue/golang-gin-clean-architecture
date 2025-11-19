@@ -1,0 +1,32 @@
+.git
+.gitignore
+README.md
+Makefile
+
+# Dependencies
+node_modules
+vendor
+
+# Local dev junk
+*.log
+*.md
+*.tmp
+*.cache
+*.swp
+
+# Python/ML files
+*.ipynb
+*.csv
+*.pkl
+*.h5
+__pycache__/
+data/
+
+# Build artifacts
+dist/
+bin/
+tmp/
+
+# Config not needed for build
+.env
+*.sample

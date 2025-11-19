@@ -18,11 +18,11 @@ gitPush: ### Command to aid in pushing code to the current branch. Runs `git add
 .PHONY: gitPush
 
 composeUp: ## Command to build and run docker containers
-	docker-compose  up --build
+	docker compose  up --build
 .PHONY: composeUp
 
 composeDown: ### Command to stop docker containers
-	docker-compose  down --remove-orphans
+	docker compose  down --remove-orphans
 .PHONY: composeDown
 
 swagInit: ### Command used to initialize swagger api documentation.Uses swaggo and gin swagger packages.Run go get -u github.com/swaggo/swag/cmd/swag@v1.6.7 command first
