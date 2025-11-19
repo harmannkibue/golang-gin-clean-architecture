@@ -3,21 +3,21 @@ package v1
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1/blog_route"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/controller/http/v1/job_route"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/entity/intfaces"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/pkg/logger"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
 	"net/http"
 
 	// Swagger docs -.
-	_ "github.com/harmannkibue/golang_gin_clean_architecture/docs"
+	_ "github.com/harmannkibue/actsml-jobs-orchestrator/docs"
 )
 
 // NewRouter -.
 // Swagger spec:
-// @title       Gin Gonic golang Clean Architecture.
+// @title       ACTSML Gin Gonic golang Clean Architecture Orchestrator.
 // @description Illustration of uncle Bob's clean architecture using a demo blogs api.
 // @description It serves as Blog.
 // @version     1.0
@@ -58,6 +58,6 @@ func NewRouter(handler *gin.Engine, l logger.Interface, u intfaces.Dependencies)
 	unversionedGroup := handler.Group("/api/v1")
 
 	{
-		blog_route.NewBlogRoute(unversionedGroup, u.BlogUsecase, l)
+		job_route.NewJobRoute(unversionedGroup, u.JobUsecase, l)
 	}
 }

@@ -5,7 +5,7 @@ package app
 import (
 	"errors"
 	"github.com/golang-migrate/migrate/v4"
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/config"
 
 	"log"
 	"time"

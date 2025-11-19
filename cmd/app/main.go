@@ -1,8 +1,8 @@
 package main
 
 import (
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/app"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/config"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/app"
 	"log"
 )
 

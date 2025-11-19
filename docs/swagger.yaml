@@ -1,50 +1,22 @@
 basePath: /api/v1
 definitions:
-  blog_route.createBlogRequestBody:
+  entity.HTTPError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+    type: object
+  job_route.createJobRequestBody:
     properties:
       description:
         type: string
     type: object
-  blog_route.createBlogResponse:
+  job_route.createJobResponse:
     properties:
       created_at:
         type: string
       message:
-        type: string
-    type: object
-  blog_route.listBlogsResponse:
-    properties:
-      blogs:
-        items:
-          $ref: '#/definitions/blog_route.createBlogResponse'
-        type: array
-    type: object
-  blog_route.singleBlogResponse:
-    properties:
-      blog:
-        $ref: '#/definitions/sqlc.Blog'
-        type: object
-    type: object
-  httputil.HTTPError:
-    properties:
-      code:
-        example: 400
-        type: integer
-      message:
-        example: status bad request
-        type: string
-    type: object
-  sqlc.Blog:
-    properties:
-      createdAt:
-        type: string
-      descriptions:
-        type: string
-      id:
-        type: string
-      updatedAt:
-        type: string
-      userRole:
         type: string
     type: object
 host: localhost:8080
@@ -53,96 +25,40 @@ info:
   description: |-
     Illustration of uncle Bob's clean architecture using a demo blogs api.
     It serves as Blog.
-  license: {}
-  title: Gin Gonic golang Clean Architecture.
+  title: ACTSML Gin Gonic golang Clean Architecture Orchestrator.
   version: "1.0"
 paths:
-  /blogs/:
-    get:
-      consumes:
-      - application/json
-      description: Show all blogs registered
-      operationId: Fetch Blog
-      parameters:
-      - description: "1"
-        in: query
-        name: Page
-        type: string
-      - description: "10"
-        in: query
-        name: ItemsPerPage
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/blog_route.listBlogsResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-      summary: List all the Blogs
-      tags:
-      - Blogs
-  /blogs/{id}:
-    get:
-      consumes:
-      - application/json
-      description: Show a single blog registered
-      operationId: Single blog
-      parameters:
-      - description: blog ID
-        in: path
-        name: id
-        required: true
-        type: string
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/blog_route.singleBlogResponse'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/httputil.HTTPError'
-      summary: Fetch single blog by ID
-      tags:
-      - Blogs
-  /blogs/create-blog/:
+  /jobs/create-job/:
     post:
       consumes:
       - application/json
-      description: Create a blog
-      operationId: Create a blog
+      description: Create a Job
+      operationId: Create a Job
       parameters:
       - description: Create blog request body
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/blog_route.createBlogRequestBody'
+          $ref: '#/definitions/job_route.createJobRequestBody'
       produces:
       - application/json
       responses:
         "201":
           description: Created
           schema:
-            $ref: '#/definitions/blog_route.createBlogResponse'
+            $ref: '#/definitions/job_route.createJobResponse'
         "400":
           description: Bad Request
           schema:
-            $ref: '#/definitions/httputil.HTTPError'
+            $ref: '#/definitions/entity.HTTPError'
         "500":
           description: Internal Server Error
           schema:
-            $ref: '#/definitions/httputil.HTTPError'
-      summary: Create a blog
+            $ref: '#/definitions/entity.HTTPError'
+      summary: Create a Job
       tags:
-      - Blogs
+      - Job
 securityDefinitions:
   BasicAuth:
     type: basic

@@ -1,74 +1,62 @@
-// Package app configures and runs application.
+// Package app configures and runs the application.
 package app
 
 import (
-	"database/sql"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/harmannkibue/golang_gin_clean_architecture/config"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/controller/http/v1"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/entity/intfaces"
-	"github.com/harmannkibue/golang_gin_clean_architecture/internal/usecase/blog_usecase"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/httpserver"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/logger"
-	"github.com/harmannkibue/golang_gin_clean_architecture/pkg/postgres"
-	_ "github.com/lib/pq"
 	"os"
 	"os/signal"
 	"syscall"
+
+	"github.com/gin-gonic/gin"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/config"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/controller/http/v1"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/entity/intfaces"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/usecase/job_usecase"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/pkg/httpserver"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/pkg/logger"
 )
 
-// Run creates objects via constructors -.
 func Run(cfg *config.Config) {
+	// ---------- LOGGER ----------
 	l := logger.New(cfg.Log.Level)
+	l.Info("Starting ACTSML Job Orchestrator...")
 
-	// HTTP Server -.
-	handler := gin.Default()
+	// ---------- HTTP HANDLER ----------
+	gin.SetMode(cfg.HTTP.Mode) // e.g., release, debug
+	handler := gin.New()
+	handler.Use(gin.Logger(), gin.Recovery())
 
-	conn, err := postgres.New(cfg)
+	// ---------- USE CASES ----------
+	jobUC := job_usecase.NewJobUseCase(cfg, l)
 
-	if err != nil {
-		fmt.Errorf("failed to connect to database %w", err)
-	}
-
-	defer func(conn *sql.DB) {
-		err := conn.Close()
-		if err != nil {
-			panic("ERROR CLOSING POSTGRES CONNECTION")
-		}
-	}(conn)
-
-	// Initializing a store for repository -.
-	store := intfaces.NewStore(conn)
-
-	blogUsecase := blog_usecase.NewBlogUseCase(store, cfg)
-
-	// Create Dependency Container -.
+	// ---------- DEPENDENCY CONTAINER ----------
 	deps := intfaces.Dependencies{
-		Logger:      l,
-		BlogUsecase: blogUsecase,
+		Logger:     l,
+		JobUsecase: jobUC,
 	}
 
-	// Passing also the basic auth middleware to all  Routers -.
+	// ---------- ROUTES ----------
 	v1.NewRouter(handler, l, deps)
 
+	// ---------- SERVER ----------
 	httpServer := httpserver.New(handler, httpserver.Port(cfg.HTTP.Port))
 
-	// Waiting signal -.
-	interrupt := make(chan os.Signal, 1)
-	signal.Notify(interrupt, os.Interrupt, syscall.SIGTERM)
+	// ---------- GRACEFUL SHUTDOWN ----------
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
 
 	select {
-	case s := <-interrupt:
-		l.Info("app - Run - signal: " + s.String())
-	case err = <-httpServer.Notify():
-		l.Error(fmt.Errorf("app - Run - httpServer.Notify: %w", err))
+	case sig := <-quit:
+		l.Info("Received shutdown signal: " + sig.String())
+
+	case err := <-httpServer.Notify():
+		l.Error(fmt.Errorf("server error: %w", err))
 	}
 
-	// Shutdown
-	err = httpServer.Shutdown()
-
-	if err != nil {
-		l.Error(fmt.Errorf("app - Run - httpServer.Shutdown: %w", err))
+	// ---------- FINAL SHUTDOWN ----------
+	if err := httpServer.Shutdown(); err != nil {
+		l.Error(fmt.Errorf("http server shutdown error: %w", err))
 	}
+
+	l.Info("ACTSML Orchestrator stopped gracefully.")
 }

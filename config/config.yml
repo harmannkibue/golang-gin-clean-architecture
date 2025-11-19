@@ -5,13 +5,8 @@ app:
 
 http:
   port: '8080'
+  mode: 'debug'
 
 logger:
   log_level: 'debug'
   rollbar_env: 'go-clean-template'
-
-postgres:
-  database_driver: "postgres"
-  pool_max: 2
-  pg_timezone: 'Africa/Nairobi'
-  PG_URL: 'postgresql://postgres:password@postgres:5432/BLOG_DB?sslmode=disable'

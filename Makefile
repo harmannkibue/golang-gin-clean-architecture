@@ -33,38 +33,6 @@ runserver: ### Starts server with incorporated air tool for hot reloads
 	air -c .air.conf
 .PHONY: runserver
 
-migrateUp: ### Command to run database schema migrations.The package used to run migrations is golang migrate
-	go run -tags migrate ./cmd/app
-.PHONY: migrateUp
-
-migrateDown: ### command to rollback the changes in schema made by migrate up command
-	migrate -path ./migrations -database "$(DB_URL)" -verbose down
-.PHONY: migrateDown
-
-migrateCreate: ### Command for creating migrations file in a sequential order e.g 000001_name_of_migration.up.sql, 000002_name_of_migration.up.sql ....n
-	migrate create -ext sql -dir ./migrations -seq init_schema
-.PHONY: migrateCreate
-
-migrateGoTo: ### Goes to the specific version of the migrations. e.g version 1
-	migrate -path db/migration -database "$(DB_URL)" -verbose goto 1
-.PHONY: migrateGoTo
-
-migrateDrop: ### Command used to drop the database migrations
-	migrate -path ./migrations -database "$(DB_URL)" -verbose drop
-.PHONY: migrateDrop
-
-sqlcInit: ### Command used to initialize an database query repository store.Package used is SQLC.
-	cd internal && sqlc init
-.PHONY: sqlcInit
-
-sqlcCompile: ### Command used for checking if there any typos in sql schemas definition
-	cd internal && sqlc compile
-.PHONY: sqlcCompile
-
-sqlcGenerate: ### Command used to generate database query repository store.Package used is SQLC -.
-	cd internal && sqlc generate
-.PHONY: sqlcGenerate
-
 dbDocs: ### Command used for documenting generating database schema documentations.
 	dbdocs build docs/db.dbml
 .PHONY: dbDocs

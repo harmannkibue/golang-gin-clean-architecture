@@ -2,61 +2,16 @@
     "swagger": "2.0",
     "info": {
         "description": "Illustration of uncle Bob's clean architecture using a demo blogs api.\nIt serves as Blog.",
-        "title": "Gin Gonic golang Clean Architecture.",
+        "title": "ACTSML Gin Gonic golang Clean Architecture Orchestrator.",
         "contact": {},
-        "license": {},
         "version": "1.0"
     },
     "host": "localhost:8080",
     "basePath": "/api/v1",
     "paths": {
-        "/blogs/": {
-            "get": {
-                "description": "Show all blogs registered",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Blogs"
-                ],
-                "summary": "List all the Blogs",
-                "operationId": "Fetch Blog",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "1",
-                        "name": "Page",
-                        "in": "query"
-                    },
-                    {
-                        "type": "string",
-                        "description": "10",
-                        "name": "ItemsPerPage",
-                        "in": "query"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/blog_route.listBlogsResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/blogs/create-blog/": {
+        "/jobs/create-job/": {
             "post": {
-                "description": "Create a blog",
+                "description": "Create a Job",
                 "consumes": [
                     "application/json"
                 ],
@@ -64,10 +19,10 @@
                     "application/json"
                 ],
                 "tags": [
-                    "Blogs"
+                    "Job"
                 ],
-                "summary": "Create a blog",
-                "operationId": "Create a blog",
+                "summary": "Create a Job",
+                "operationId": "Create a Job",
                 "parameters": [
                     {
                         "description": "Create blog request body",
@@ -75,7 +30,7 @@
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/blog_route.createBlogRequestBody"
+                            "$ref": "#/definitions/job_route.createJobRequestBody"
                         }
                     }
                 ],
@@ -83,58 +38,19 @@
                     "201": {
                         "description": "Created",
                         "schema": {
-                            "$ref": "#/definitions/blog_route.createBlogResponse"
+                            "$ref": "#/definitions/job_route.createJobResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
                         "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
+                            "$ref": "#/definitions/entity.HTTPError"
                         }
                     },
                     "500": {
                         "description": "Internal Server Error",
                         "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
-                        }
-                    }
-                }
-            }
-        },
-        "/blogs/{id}": {
-            "get": {
-                "description": "Show a single blog registered",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Blogs"
-                ],
-                "summary": "Fetch single blog by ID",
-                "operationId": "Single blog",
-                "parameters": [
-                    {
-                        "type": "string",
-                        "description": "blog ID",
-                        "name": "id",
-                        "in": "path",
-                        "required": true
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/blog_route.singleBlogResponse"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/httputil.HTTPError"
+                            "$ref": "#/definitions/entity.HTTPError"
                         }
                     }
                 }
@@ -142,7 +58,18 @@
         }
     },
     "definitions": {
-        "blog_route.createBlogRequestBody": {
+        "entity.HTTPError": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "job_route.createJobRequestBody": {
             "type": "object",
             "properties": {
                 "description": {
@@ -150,66 +77,13 @@
                 }
             }
         },
-        "blog_route.createBlogResponse": {
+        "job_route.createJobResponse": {
             "type": "object",
             "properties": {
                 "created_at": {
                     "type": "string"
                 },
                 "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "blog_route.listBlogsResponse": {
-            "type": "object",
-            "properties": {
-                "blogs": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/definitions/blog_route.createBlogResponse"
-                    }
-                }
-            }
-        },
-        "blog_route.singleBlogResponse": {
-            "type": "object",
-            "properties": {
-                "blog": {
-                    "type": "object",
-                    "$ref": "#/definitions/sqlc.Blog"
-                }
-            }
-        },
-        "httputil.HTTPError": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer",
-                    "example": 400
-                },
-                "message": {
-                    "type": "string",
-                    "example": "status bad request"
-                }
-            }
-        },
-        "sqlc.Blog": {
-            "type": "object",
-            "properties": {
-                "createdAt": {
-                    "type": "string"
-                },
-                "descriptions": {
-                    "type": "string"
-                },
-                "id": {
-                    "type": "string"
-                },
-                "updatedAt": {
-                    "type": "string"
-                },
-                "userRole": {
                     "type": "string"
                 }
             }

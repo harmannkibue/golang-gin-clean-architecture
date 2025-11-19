@@ -76,3 +76,8 @@ func ErrorCodeResponse(err error) ErrorCodesStruct {
 
 	return errStruct
 }
+
+type HTTPError struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}

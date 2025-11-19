@@ -11,7 +11,6 @@ type (
 		App  `yaml:"app"`
 		HTTP `yaml:"http"`
 		Log  `yaml:"logger"`
-		PG   `yaml:"postgres"`
 	}
 
 	// App -.
@@ -23,19 +22,12 @@ type (
 	// HTTP -.
 	HTTP struct {
 		Port string `env-required:"true" yaml:"port" env:"HTTP_PORT"`
+		Mode string `env-required:"true" yaml:"mode" env:"MODE"`
 	}
 
 	// Log -.
 	Log struct {
 		Level string `env-required:"true" yaml:"log_level"   env:"LOG_LEVEL"`
-	}
-
-	// PG -.
-	PG struct {
-		PoolMax        int    `env-required:"true" yaml:"pool_max" env:"PG_POOL_MAX"`
-		VaTimezone     string `env-required:"true"   yaml:"pg_timezone"    env:"VA_TIMEZONE"`
-		DatabaseDriver string `env-required:"true"   yaml:"database_driver"    env:"DATABASE_DRIVER"`
-		PostgresUrl    string `env-required:"true"   yaml:"PG_URL"    env:"PG_URL"`
 	}
 )
 

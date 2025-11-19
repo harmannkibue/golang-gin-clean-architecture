@@ -5,7 +5,7 @@ docs/img/golang-gopher.png
 Clean Architecture template for Golang Microservices
 
 [![License](https://img.shields.io/github/license/evrone/go-clean-template.svg)](https://github.com/evrone/go-clean-template/blob/master/LICENSE)
-[![Release](https://img.shields.io/github/v/release/evrone/go-clean-template.svg)](https://github.com/harmannkibue/golang_gin_clean_architecture/releases/)
+[![Release](https://img.shields.io/github/v/release/evrone/go-clean-template.svg)](https://github.com/harmannkibue/actsml-jobs-orchestrator/releases/)
 [![codecov](https://codecov.io/gh/evrone/go-clean-template/branch/master/graph/badge.svg?token=XE3E0X3EVQ)](https://codecov.io/gh/evrone/go-clean-template)
 
 ## Overview
