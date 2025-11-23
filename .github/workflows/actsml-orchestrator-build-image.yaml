@@ -35,11 +35,21 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GHCR_PAT }}
 
-      - name: 🏗 Build and Push multi-arch Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: .
-          push: true
-          platforms: linux/amd64,linux/arm64
-          tags: |
-            ghcr.io/${{ github.repository_owner }}/actsml-jobs-orchestrator:${{ github.event.inputs.environment }}
+      - name: 🏗 Build Docker image
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=${{ github.event.inputs.environment }}
+          docker build \
+            --platform linux/amd64 \
+            -t ghcr.io/${REPO_OWNER}/actsml-jobs-orchestrator:${TAG} .
+          
+
+      - name: 🚀 Push Docker image to GHCR
+        run: |
+          REPO_OWNER=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          TAG=${{ github.event.inputs.environment }}
+          docker push ghcr.io/${REPO_OWNER}/actsml-jobs-orchestrator:${TAG}
+
+          
+      
+      
