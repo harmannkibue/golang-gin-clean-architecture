@@ -6,4 +6,4 @@ set -e
 
 echo "STARTING GOLANG APPLICATION"
 
-exec "$@"
+exec /app/main

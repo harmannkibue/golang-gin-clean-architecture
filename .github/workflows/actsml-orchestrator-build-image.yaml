@@ -42,7 +42,6 @@ jobs:
           docker build \
             --platform linux/amd64 \
             -t ghcr.io/${REPO_OWNER}/actsml-jobs-orchestrator:${TAG} .
-          
 
       - name: 🚀 Push Docker image to GHCR
         run: |
