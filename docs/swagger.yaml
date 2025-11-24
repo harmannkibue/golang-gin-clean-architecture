@@ -7,16 +7,27 @@ definitions:
       message:
         type: string
     type: object
-  job_route.createJobRequestBody:
-    properties:
-      description:
-        type: string
-    type: object
   job_route.createJobResponse:
     properties:
-      created_at:
+      experiment_id:
         type: string
-      message:
+      job_id:
+        type: string
+      k8s_job_name:
+        type: string
+      project_id:
+        type: string
+      status:
+        type: string
+      submitted_at:
+        type: string
+    type: object
+  job_route.getJobStatusResponse:
+    properties:
+      job_id:
+        type: string
+      k8s_conditions: {}
+      status:
         type: string
     type: object
 host: localhost:8080
@@ -28,24 +39,52 @@ info:
   title: ACTSML Gin Gonic golang Clean Architecture Orchestrator.
   version: "1.0"
 paths:
-  /jobs/create-job/:
+  /jobs/{id}/status:
+    get:
+      description: Get status of a Kubernetes training job
+      operationId: Get Job Status
+      parameters:
+      - description: Job ID (actsml-job-{uuid})
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/job_route.getJobStatusResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.HTTPError'
+      summary: Get Job Status
+      tags:
+      - Job
+  /jobs/create:
     post:
       consumes:
       - application/json
-      description: Create a Job
+      description: Create a Kubernetes training job
       operationId: Create a Job
       parameters:
-      - description: Create job request body
+      - description: Job payload (raw JSON)
         in: body
         name: request
         required: true
         schema:
-          $ref: '#/definitions/job_route.createJobRequestBody'
+          type: object
       produces:
       - application/json
       responses:
-        "201":
-          description: Created
+        "202":
+          description: Accepted
           schema:
             $ref: '#/definitions/job_route.createJobResponse'
         "400":

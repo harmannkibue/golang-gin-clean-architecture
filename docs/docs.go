@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/jobs/create-job/": {
+        "/jobs/create": {
             "post": {
-                "description": "Create a Job",
+                "description": "Create a Kubernetes training job",
                 "consumes": [
                     "application/json"
                 ],
@@ -31,24 +31,66 @@ const docTemplate = `{
                 "operationId": "Create a Job",
                 "parameters": [
                     {
-                        "description": "Create job request body",
+                        "description": "Job payload (raw JSON)",
                         "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/job_route.createJobRequestBody"
+                            "type": "object"
                         }
                     }
                 ],
                 "responses": {
-                    "201": {
-                        "description": "Created",
+                    "202": {
+                        "description": "Accepted",
                         "schema": {
                             "$ref": "#/definitions/job_route.createJobResponse"
                         }
                     },
                     "400": {
                         "description": "Bad Request",
+                        "schema": {
+                            "$ref": "#/definitions/entity.HTTPError"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error",
+                        "schema": {
+                            "$ref": "#/definitions/entity.HTTPError"
+                        }
+                    }
+                }
+            }
+        },
+        "/jobs/{id}/status": {
+            "get": {
+                "description": "Get status of a Kubernetes training job",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Job"
+                ],
+                "summary": "Get Job Status",
+                "operationId": "Get Job Status",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Job ID (actsml-job-{uuid})",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/job_route.getJobStatusResponse"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
                         "schema": {
                             "$ref": "#/definitions/entity.HTTPError"
                         }
@@ -75,21 +117,37 @@ const docTemplate = `{
                 }
             }
         },
-        "job_route.createJobRequestBody": {
+        "job_route.createJobResponse": {
             "type": "object",
             "properties": {
-                "description": {
+                "experiment_id": {
+                    "type": "string"
+                },
+                "job_id": {
+                    "type": "string"
+                },
+                "k8s_job_name": {
+                    "type": "string"
+                },
+                "project_id": {
+                    "type": "string"
+                },
+                "status": {
+                    "type": "string"
+                },
+                "submitted_at": {
                     "type": "string"
                 }
             }
         },
-        "job_route.createJobResponse": {
+        "job_route.getJobStatusResponse": {
             "type": "object",
             "properties": {
-                "created_at": {
+                "job_id": {
                     "type": "string"
                 },
-                "message": {
+                "k8s_conditions": {},
+                "status": {
                     "type": "string"
                 }
             }

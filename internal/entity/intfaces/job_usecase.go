@@ -8,15 +8,17 @@ import (
 	batchv1 "k8s.io/api/batch/v1"
 )
 
-// CreateJobResult represents the result of creating a job
+// CreateJobResult represents the result of creating a job (ACTSML standard response)
 type CreateJobResult struct {
-	JobID       string    `json:"job_id"`
-	Status      string    `json:"status"`
-	K8sJobName  string    `json:"k8s_job_name"`
-	SubmittedAt time.Time `json:"submitted_at"`
-	Namespace   string    `json:"namespace"`
-	JobUID      string    `json:"job_uid"`
-	Submitted   bool      `json:"submitted"`
+	JobID        string    `json:"job_id"`
+	Status       string    `json:"status"`
+	K8sJobName   string    `json:"k8s_job_name"`
+	SubmittedAt  time.Time `json:"submitted_at"`
+	Namespace    string    `json:"namespace"`
+	JobUID       string    `json:"job_uid"`
+	Submitted    bool      `json:"submitted"`
+	ProjectID    string    `json:"project_id,omitempty"`
+	ExperimentID string    `json:"experiment_id,omitempty"`
 }
 
 type IntJobUsecase interface {

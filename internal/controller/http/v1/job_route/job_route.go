@@ -28,10 +28,12 @@ func NewJobRoute(handler *gin.RouterGroup, t intfaces.IntJobUsecase, l logger.In
 }
 
 type createJobResponse struct {
-	JobID      string `json:"job_id"`
-	Status     string `json:"status"`
-	K8sJobName string `json:"k8s_job_name"`
+	JobID       string `json:"job_id"`
+	Status      string `json:"status"`
+	K8sJobName  string `json:"k8s_job_name"`
 	SubmittedAt string `json:"submitted_at"`
+	ProjectID   string `json:"project_id,omitempty"`
+	ExperimentID string `json:"experiment_id,omitempty"`
 }
 
 type getJobStatusResponse struct {
@@ -68,10 +70,12 @@ func (route *JobRoute) createJob(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusAccepted, createJobResponse{
-		JobID:       res.JobID,
-		Status:      res.Status,
-		K8sJobName:  res.K8sJobName,
-		SubmittedAt: res.SubmittedAt.Format("2006-01-02T15:04:05Z"),
+		JobID:        res.JobID,
+		Status:       res.Status,
+		K8sJobName:   res.K8sJobName,
+		SubmittedAt:  res.SubmittedAt.Format("2006-01-02T15:04:05Z"),
+		ProjectID:    res.ProjectID,
+		ExperimentID: res.ExperimentID,
 	})
 }
 

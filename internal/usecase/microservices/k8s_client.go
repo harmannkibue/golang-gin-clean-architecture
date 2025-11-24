@@ -10,6 +10,7 @@ import (
 	"k8s.io/client-go/tools/clientcmd"
 
 	batchv1 "k8s.io/api/batch/v1"
+	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
 	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/entity/intfaces"
@@ -58,4 +59,12 @@ func (c *K8sClient) DeleteJob(ctx context.Context, namespace, name string) error
 
 func (c *K8sClient) GetJob(ctx context.Context, namespace, name string) (*batchv1.Job, error) {
 	return c.clientset.BatchV1().Jobs(namespace).Get(ctx, name, metav1.GetOptions{})
+}
+
+func (c *K8sClient) CreateConfigMap(ctx context.Context, namespace string, configMap *corev1.ConfigMap) (*corev1.ConfigMap, error) {
+	return c.clientset.CoreV1().ConfigMaps(namespace).Create(ctx, configMap, metav1.CreateOptions{})
+}
+
+func (c *K8sClient) DeleteConfigMap(ctx context.Context, namespace, name string) error {
+	return c.clientset.CoreV1().ConfigMaps(namespace).Delete(ctx, name, metav1.DeleteOptions{})
 }
