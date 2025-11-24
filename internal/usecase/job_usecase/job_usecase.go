@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/google/uuid"
@@ -185,13 +186,19 @@ func (uc *JobUseCase) getWorkerImage() string {
 	return "ghcr.io/afriqsiliconltd/actsml-worker-image:staging"
 }
 
-// getMinIOEndpoint returns the MinIO endpoint
+// getMinIOEndpoint returns the MinIO endpoint (with protocol)
 func (uc *JobUseCase) getMinIOEndpoint() string {
 	// Can be overridden via config or environment variable
 	if endpoint := os.Getenv("MINIO_ENDPOINT"); endpoint != "" {
+		// Ensure protocol is included
+		if !strings.HasPrefix(endpoint, "http://") && !strings.HasPrefix(endpoint, "https://") {
+			// If no protocol, add https:// by default (VPS uses HTTPS)
+			endpoint = "https://" + endpoint
+		}
 		return endpoint
 	}
-	return "http://api.staging.minio.actsml.com"
+	// Default to HTTPS endpoint for VPS
+	return "https://api.staging.minio.actsml.com"
 }
 
 // getMinIOAccessKey returns the MinIO access key
@@ -215,7 +222,7 @@ func (uc *JobUseCase) getMinIOSecure() string {
 	if secure := os.Getenv("MINIO_SECURE"); secure != "" {
 		return secure
 	}
-	return "false"
+	return "true" // Default to true since VPS uses HTTPS
 }
 
 // getImagePullSecretName returns the name of the image pull secret to use
