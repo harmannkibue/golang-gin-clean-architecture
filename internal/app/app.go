@@ -8,10 +8,13 @@ import (
 	"syscall"
 
 	"github.com/gin-gonic/gin"
+
 	"github.com/harmannkibue/actsml-jobs-orchestrator/config"
 	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/controller/http/v1"
 	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/entity/intfaces"
 	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/usecase/job_usecase"
+	"github.com/harmannkibue/actsml-jobs-orchestrator/internal/usecase/microservices"
+
 	"github.com/harmannkibue/actsml-jobs-orchestrator/pkg/httpserver"
 	"github.com/harmannkibue/actsml-jobs-orchestrator/pkg/logger"
 )
@@ -22,17 +25,24 @@ func Run(cfg *config.Config) {
 	l.Info("Starting ACTSML Job Orchestrator...")
 
 	// ---------- HTTP HANDLER ----------
-	gin.SetMode(cfg.HTTP.Mode) // e.g., release, debug
+	gin.SetMode(cfg.HTTP.Mode)
 	handler := gin.New()
 	handler.Use(gin.Logger(), gin.Recovery())
 
+	// ---------- K8S CLIENT ----------
+	k8sClient, err := microservices.NewK8sClient()
+	if err != nil {
+		l.Fatal(fmt.Errorf("failed to initialize Kubernetes client: %w", err))
+	}
+
 	// ---------- USE CASES ----------
-	jobUC := job_usecase.NewJobUseCase(cfg, l)
+	jobUC := job_usecase.NewJobUseCase(cfg, l, k8sClient)
 
 	// ---------- DEPENDENCY CONTAINER ----------
 	deps := intfaces.Dependencies{
 		Logger:     l,
 		JobUsecase: jobUC,
+		K8sClient:  k8sClient,
 	}
 
 	// ---------- ROUTES ----------
